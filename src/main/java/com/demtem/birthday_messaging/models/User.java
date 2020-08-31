@@ -19,8 +19,10 @@ public class User {
 
     private List<Friend> friends;
 
-    //private List<Role> roles;
+    private List<Role> roles;
     private Date dateJoined;
+
+    private String providerId;
 
     public String get_id(){
         return _id.toHexString();

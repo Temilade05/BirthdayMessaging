@@ -130,4 +130,5 @@ public class FriendService implements IService<Friend> {
         log.info("Successfully deleted friend");
         return responseUtil.successfulResponse(null);
     }
+
 }
