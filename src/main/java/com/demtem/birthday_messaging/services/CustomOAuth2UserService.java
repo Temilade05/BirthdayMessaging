@@ -92,6 +92,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return userRepository.save(existingUser);
     }
 
+
     @Transactional
     public UserDetails loadUserById(ObjectId _id) {
         User user = userRepository.findById(_id).orElseThrow(
@@ -101,4 +102,3 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user);
     }
 }
-

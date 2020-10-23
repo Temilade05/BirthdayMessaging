@@ -27,19 +27,21 @@ public class FriendService implements IService<Friend> {
     }
 
     @Override
-    public Response<Friend> createT(Friend friend) {
+    public Response<Friend> createT(Friend friend, ObjectId userId) {
+
         log.info("Started creating new friend");
 
         ResponseUtil<Friend> responseUtil = new ResponseUtil<>();
         Friend newFriend;
 
         friend.set_id(ObjectId.get());
+        friend.setUserId(userId);
 
         try {
             newFriend = friendRepository.save(friend);
         } catch (Exception  e){
             log.error("Error", e);
-            throw new DatabaseException("Error occurred while  creating new friend");
+            throw new DatabaseException("Error occurred while creating new friend");
         }
 
         log.info("Created friend successfully");
@@ -47,7 +49,7 @@ public class FriendService implements IService<Friend> {
     }
 
     @Override
-    public Response<Friend> readAllTs() {
+    public Response<Friend> readAllTs(ObjectId userId) {
 
         log.info("Started getting all  friends");
 
@@ -55,7 +57,7 @@ public class FriendService implements IService<Friend> {
         List<Friend> friends;
 
         try {
-            friends = friendRepository.findAll();
+            friends = friendRepository.findByUserId(userId);
         }catch (Exception e){
             log.error("Error ", e);
             throw new DatabaseException("Error occurred while getting all friends.");

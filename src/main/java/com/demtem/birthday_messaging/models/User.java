@@ -17,8 +17,6 @@ public class User {
     private String lastName;
     private String email;
 
-    private List<Friend> friends;
-
     private List<Role> roles;
     private Date dateJoined;
 

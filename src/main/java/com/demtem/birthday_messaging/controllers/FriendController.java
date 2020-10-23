@@ -1,12 +1,14 @@
 package com.demtem.birthday_messaging.controllers;
 
 import com.demtem.birthday_messaging.models.Friend;
+import com.demtem.birthday_messaging.models.UserPrincipal;
 import com.demtem.birthday_messaging.models.responses.Response;
 import com.demtem.birthday_messaging.services.FriendService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +23,11 @@ public class FriendController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Response<Friend>> getAllFriends() {
-        Response<Friend> friendResponse = friendService.readAllTs();
+    public ResponseEntity<Response<Friend>> getAllFriends(Authentication authentication) {
+
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        Response<Friend> friendResponse = friendService.readAllTs(new ObjectId(userPrincipal.get_id()));
         return new ResponseEntity<>(friendResponse, HttpStatus.valueOf(Integer.parseInt(friendResponse.getStatusCode())));
     }
 
@@ -33,8 +38,11 @@ public class FriendController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Response<Friend>> addFriend(@RequestBody Friend friend) {
-        Response<Friend> friendResponse = friendService.createT(friend);
+    public ResponseEntity<Response<Friend>> addFriend(@RequestBody Friend friend, Authentication authentication) {
+
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        Response<Friend> friendResponse = friendService.createT(friend, new ObjectId(userPrincipal.get_id()));
         return new ResponseEntity<>(friendResponse, HttpStatus.valueOf(Integer.parseInt(friendResponse.getStatusCode())));
     }
 

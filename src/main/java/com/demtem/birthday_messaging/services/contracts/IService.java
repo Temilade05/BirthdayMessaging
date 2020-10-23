@@ -5,9 +5,9 @@ import org.bson.types.ObjectId;
 
 public interface IService<T> {
 
-    Response<T> createT(T t);
+    Response<T> createT(T t, ObjectId id);
 
-    Response<T> readAllTs();
+    Response<T> readAllTs(ObjectId userId);
 
     Response<T> readTById(ObjectId id);
 
