@@ -34,4 +34,5 @@ build/
 
 
 # Ignore properties files.
-application.properties
+application.pro\ertiesee
+!/src/main/resources/application.properties
